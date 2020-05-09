@@ -14,6 +14,16 @@ static void ip_init_pkt(struct iphdr *ih)
     ih->id = ntohs(ih->id);
 }
 
+int ip_v6_rcv(struct sk_buff *skb) {
+    struct iphdr *ih = ip_hdr(skb);
+    print_err("Header version: %x\n", ih->version);
+    if (ih->version != IPV6) {
+        print_err("Datagram version was not IPv6\n");
+    }
+    free_skb(skb);
+    return 0;
+}
+
 int ip_rcv(struct sk_buff *skb)
 {
     struct iphdr *ih = ip_hdr(skb);
@@ -55,8 +65,11 @@ int ip_rcv(struct sk_buff *skb)
     case IP_TCP:
         tcp_in(skb);
         return 0;
+    case IP_UDP:
+        print_err("UDP not supported. \n");
+        goto drop_pkt;
     default:
-        print_err("Unknown IP header proto\n");
+        print_err("Unknown IP header proto %x\n", ih->proto);
         goto drop_pkt;
     }
 

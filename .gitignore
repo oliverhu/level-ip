@@ -6,3 +6,6 @@ a.out
 lvl-ip
 tests/venv
 vgcore*
+*.so
+apps/curl-poll/curl-poll
+apps/curl-poll/curl-poll

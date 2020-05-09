@@ -74,6 +74,8 @@ static int netdev_receive(struct sk_buff *skb)
             ip_rcv(skb);
             break;
         case ETH_P_IPV6:
+            ip_v6_rcv(skb);
+            break;
         default:
             printf("Unsupported ethertype %x\n", hdr->ethertype);
             free_skb(skb);

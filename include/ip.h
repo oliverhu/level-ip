@@ -6,9 +6,10 @@
 #include "sock.h"
 
 #define IPV4 0x04
+#define IPV6 0x06
 #define IP_TCP 0x06
 #define ICMPV4 0x01
-
+#define IP_UDP 0x11
 #define IP_HDR_LEN sizeof(struct iphdr)
 #define ip_len(ip) (ip->len - (ip->ihl * 4))
 
@@ -62,6 +63,7 @@ static inline uint32_t ip_parse(char *addr)
 }
 
 int ip_rcv(struct sk_buff *skb);
+int ip_v6_rcv(struct sk_buff *skb);
 int ip_output(struct sock *sk, struct sk_buff *skb);
 
 #endif
